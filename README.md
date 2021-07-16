@@ -1,2 +1,2 @@
-# Curso-JUnit
-Projeto criado a partir de um curso que aborda as seguintes tecnologias: JUnit, Mockito, PowerMock, Domine e TDD
+# Course-JUnit
+Project created to study a course that approaches the following technologies: JUnit, Mockito, PowerMock, Domine and TDD
