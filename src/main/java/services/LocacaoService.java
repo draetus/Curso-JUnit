@@ -4,15 +4,25 @@ import static utils.DataUtils.adicionarDias;
 
 import java.util.Date;
 
+import exceptions.FilmeSemEstoqueException;
+import exceptions.LocadoraException;
 import model.Filme;
 import model.Locacao;
 import model.Usuario;
 
 public class LocacaoService {
 	
-	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws FilmeSemEstoqueException, LocadoraException {
+		if (usuario == null) {
+			throw new LocadoraException("Usuario vazio");
+		}
+		
+		if (filme == null) {
+			throw new LocadoraException("Filme vazio");
+		}
+		
 		if (filme.getEstoque() == 0) {
-			throw new Exception("Filme sem estoque");
+			throw new FilmeSemEstoqueException();
 		}
 		
 		var locacao = new Locacao();

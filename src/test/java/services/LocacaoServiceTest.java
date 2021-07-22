@@ -13,7 +13,10 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import exceptions.FilmeSemEstoqueException;
+import exceptions.LocadoraException;
 import model.Filme;
+import model.Locacao;
 import model.Usuario;
 
 public class LocacaoServiceTest {
@@ -39,7 +42,7 @@ public class LocacaoServiceTest {
 		error.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
 	}
 	
-	@Test(expected = Exception.class)
+	@Test(expected = FilmeSemEstoqueException.class)
 	public void testeLocacaoFilmeSemEstoque() throws Exception {
 		//cenario
 		var service = new LocacaoService();
@@ -51,32 +54,30 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
-	public void testeLocacaoFilmeSemEstoque2() {
+	public void testLocacaoUsuarioVazio() throws FilmeSemEstoqueException {
 		//cenario
 		var service = new LocacaoService();
-		var usuario = new Usuario("Usuario 1");
-		var filme = new Filme("Filme 1", 0, 5.0);
+		var filme = new Filme("Filme 1", 2, 5.0);
 		
-		//ação
+		//acao
 		try {
-			service.alugarFilme(usuario, filme);
-			Assert.fail("Deveria ter lançado uma exceção");
-		} catch (Exception e) {
-			Assert.assertThat(e.getMessage(), is("Filme sem estoque"));
+			service.alugarFilme(null, filme);
+			Assert.fail();
+		} catch (LocadoraException e) {
+			Assert.assertThat(e.getMessage(), is("Usuario vazio"));
 		}
 	}
 	
 	@Test
-	public void testeLocacaoFilmeSemEstoque3() throws Exception {
+	public void testLocacaoFilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
 		var service = new LocacaoService();
 		var usuario = new Usuario("Usuario 1");
-		var filme = new Filme("Filme 1", 0, 5.0);
+		exception.expect(LocadoraException.class);
+		exception.expectMessage("Filme vazio");
 		
-		exception.expect(Exception.class);
-		exception.expectMessage("Filme sem estoque");
 		
-		//ação
-		service.alugarFilme(usuario, filme);
+		//acao
+		service.alugarFilme(usuario, null);
 	}
 }
