@@ -33,7 +33,7 @@ public class AssertTest {
 		Assert.assertSame(u1, u1);
 		Assert.assertNotSame(u1, u2);
 		Assert.assertNull(u3);
-		Assert.assertNull(u2);
+		Assert.assertNotNull(u2);
 		
 	}
 
