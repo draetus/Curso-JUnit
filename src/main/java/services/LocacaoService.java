@@ -2,6 +2,7 @@ package services;
 
 import static utils.DataUtils.adicionarDias;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import exceptions.LocadoraException;
 import model.Filme;
 import model.Locacao;
 import model.Usuario;
+import utils.DataUtils;
 
 public class LocacaoService {
 	
@@ -44,6 +46,8 @@ public class LocacaoService {
 		//Entrega no dia seguinte
 		var dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
+		if(DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY))
+			dataEntrega = DataUtils.adicionarDias(dataEntrega, 1);
 		locacao.setDataRetorno(dataEntrega);
 		
 		//Salvando a locacao...	

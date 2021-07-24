@@ -6,11 +6,14 @@ import static utils.DataUtils.isMesmaData;
 import static utils.DataUtils.obterDataComDiferencaDias;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -20,6 +23,7 @@ import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
 import model.Usuario;
+import utils.DataUtils;
 
 public class LocacaoServiceTest {
 	
@@ -38,6 +42,8 @@ public class LocacaoServiceTest {
 	
 	@Test
 	public void deveAlugarFilme() throws FilmeSemEstoqueException, LocadoraException {
+		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+		
 		//cenario
 		var usuario = new Usuario("Usuario 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
@@ -154,5 +160,21 @@ public class LocacaoServiceTest {
 		
 		//verificacao
 		Assert.assertEquals(35.0, locacao.getValor().doubleValue(), 0.01);
+	}
+	
+	@Test
+	public void deveDevolverFilmeNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+		
+		//cenario
+		var usuario = new Usuario("Usuario 1");
+		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
+		
+		//ação
+		var locacao = service.alugarFilme(usuario, filmes);
+		
+		//verificacao
+		Boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+		Assert.assertTrue(ehSegunda);
 	}
 }
