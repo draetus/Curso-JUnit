@@ -1,9 +1,11 @@
 package services;
 
+import static matchers.MatchersProprios.caiNumaSegunda;
+import static matchers.MatchersProprios.ehHoje;
+import static matchers.MatchersProprios.ehHojeComDiferencaDias;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static utils.DataUtils.isMesmaData;
-import static utils.DataUtils.obterDataComDiferencaDias;
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -51,12 +53,14 @@ public class LocacaoServiceTest {
 		var locacao = service.alugarFilme(usuario, filmes);
 		//verificação
 		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
-		error.checkThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-		error.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+//		error.checkThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
+//		error.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+		error.checkThat(locacao.getDataLocacao(), ehHoje());
+		error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
 	}
 	
 	@Test(expected = FilmeSemEstoqueException.class)
-	public void naoDeveAlugarFilmeSemEstoque() throws Exception {
+	public void naoDeveAlugarFilmeSemEstoque() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
 		var usuario = new Usuario("Usuario 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 0, 5.0));
@@ -103,7 +107,6 @@ public class LocacaoServiceTest {
 		var locacao = service.alugarFilme(usuario, filmes);
 		
 		//verificacao
-		Boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
-		Assert.assertTrue(ehSegunda);
+		assertThat(locacao.getDataRetorno(), caiNumaSegunda());
 	}
 }
