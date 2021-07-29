@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import buildermaster.BuilderMaster;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
@@ -64,5 +65,9 @@ public class LocacaoService {
 			case 5: return 0.0;
 			default: return valorFilme;
 		}
+	}
+	
+	public static void main(String[] args) {
+		new BuilderMaster().gerarCodigoClasse(Locacao.class);
 	}
 }
