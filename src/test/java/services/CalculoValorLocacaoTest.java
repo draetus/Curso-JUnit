@@ -14,6 +14,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import dao.LocacaoDAO;
+import dao.LocacaoDaoFake;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
@@ -36,6 +38,8 @@ public class CalculoValorLocacaoTest {
 	@Before
 	public void setup() {
 		service = new LocacaoService();
+		LocacaoDAO dao = new LocacaoDaoFake();
+		service.setLocacaoDAO(dao);
 	}
 	
 	private static Filme filme1 = umFilme().agora();

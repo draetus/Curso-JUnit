@@ -60,6 +60,10 @@ public class LocacaoService {
 		return locacao;
 	}
 	
+	public void setLocacaoDAO(LocacaoDAO dao) {
+		this.dao = dao;
+	}
+	
 	private Double calculaValorDescontadoFilme(int i, Double valorFilme) {
 		switch(i) {
 			case 2: return valorFilme * 0.75;
@@ -68,9 +72,5 @@ public class LocacaoService {
 			case 5: return 0.0;
 			default: return valorFilme;
 		}
-	}
-	
-	public static void main(String[] args) {
-		new BuilderMaster().gerarCodigoClasse(Locacao.class);
 	}
 }

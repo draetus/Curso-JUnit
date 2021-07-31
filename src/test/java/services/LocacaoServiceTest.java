@@ -23,11 +23,11 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
-import buildermaster.BuilderMaster;
+import dao.LocacaoDAO;
+import dao.LocacaoDaoFake;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
-import model.Locacao;
 import utils.DataUtils;
 
 public class LocacaoServiceTest {
@@ -43,6 +43,8 @@ public class LocacaoServiceTest {
 	@Before
 	public void setup() {
 		service = new LocacaoService();
+		LocacaoDAO dao = new LocacaoDaoFake();
+		service.setLocacaoDAO(dao);
 	}
 	
 	@Test
