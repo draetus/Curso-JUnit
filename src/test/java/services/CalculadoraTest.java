@@ -66,8 +66,8 @@ public class CalculadoraTest {
 	
 	@Test
 	public void deveDividirDoisValoresString() {
-		String a = "6";
-		String b = "3";
+		var a = "6";
+		var b = "3";
 		
 		int resultado = calc.divide(a, b);
 		

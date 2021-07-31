@@ -29,6 +29,11 @@ public class Usuario {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + "]";
+	}
+
 	private String nome;
 	
 	public Usuario() {}
