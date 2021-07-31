@@ -74,18 +74,6 @@ public class LocacaoService {
 		}
 	}
 	
-	public void setLocacaoDAO(LocacaoDAO dao) {
-		this.dao = dao;
-	}
-	
-	public void setSPCService(SPCService spcService) {
-		this.spcService = spcService;
-	}
-	
-	public void setEmailService(EmailService emailService ) {
-		this.emailService = emailService;
-	}
-	
 	private Double calculaValorDescontadoFilme(int i, Double valorFilme) {
 		switch(i) {
 			case 2: return valorFilme * 0.75;

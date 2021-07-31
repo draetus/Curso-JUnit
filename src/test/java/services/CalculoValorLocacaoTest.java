@@ -13,7 +13,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import dao.LocacaoDAO;
 import exceptions.FilmeSemEstoqueException;
@@ -24,7 +26,14 @@ import model.Usuario;
 @RunWith(Parameterized.class)
 public class CalculoValorLocacaoTest {
 	
+	@InjectMocks
 	private LocacaoService service;
+	
+	@Mock
+	private LocacaoDAO dao;
+	
+	@Mock
+	private SPCService spcService;
 	
 	@Parameter(value = 0)
 	public List<Filme> filmes;
@@ -37,11 +46,7 @@ public class CalculoValorLocacaoTest {
 	
 	@Before
 	public void setup() {
-		service = new LocacaoService();
-		var dao = Mockito.mock(LocacaoDAO.class); 
-		service.setLocacaoDAO(dao);
-		var spcService = Mockito.mock(SPCService.class);
-		service.setSPCService(spcService);
+		MockitoAnnotations.initMocks(this);
 	}
 	
 	private static Filme filme1 = umFilme().agora();
