@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import buildermaster.BuilderMaster;
+import dao.LocacaoDAO;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
@@ -15,6 +16,8 @@ import model.Usuario;
 import utils.DataUtils;
 
 public class LocacaoService {
+	
+	private LocacaoDAO dao;
 	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
 		if (usuario == null) {
@@ -52,7 +55,7 @@ public class LocacaoService {
 		locacao.setDataRetorno(dataEntrega);
 		
 		//Salvando a locacao...	
-		//TODO adicionar método para salvar
+		dao.salvar(locacao); 
 		
 		return locacao;
 	}
