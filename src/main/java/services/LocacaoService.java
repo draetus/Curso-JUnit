@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import buildermaster.BuilderMaster;
 import dao.LocacaoDAO;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
@@ -40,7 +39,7 @@ public class LocacaoService {
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
 		Double valorTotal = 0d;
-		for (int i=0; i<filmes.size(); i++) {
+		for (var i=0; i<filmes.size(); i++) {
 			var filme = filmes.get(i);
 			Double valorFilme = calculaValorDescontadoFilme(i, filme.getPrecoLocacao());
 			valorTotal += valorFilme;

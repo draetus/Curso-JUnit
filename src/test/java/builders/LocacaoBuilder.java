@@ -1,6 +1,5 @@
 package builders;
 
-import static builders.FilmeBuilder.umFilme;
 import static builders.UsuarioBuilder.umUsuario;
 
 import java.util.Arrays;
@@ -17,7 +16,7 @@ public class LocacaoBuilder {
 	private LocacaoBuilder(){}
 
 	public static LocacaoBuilder umLocacao() {
-		LocacaoBuilder builder = new LocacaoBuilder();
+		var builder = new LocacaoBuilder();
 		inicializarDadosPadroes(builder);
 		return builder;
 	}
