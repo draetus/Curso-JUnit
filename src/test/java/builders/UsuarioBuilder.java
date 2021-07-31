@@ -9,7 +9,7 @@ public class UsuarioBuilder {
 	private UsuarioBuilder() {}
 	
 	public static UsuarioBuilder umUsuario() {
-		UsuarioBuilder usuarioBuilder = new UsuarioBuilder();
+		var usuarioBuilder = new UsuarioBuilder();
 		usuarioBuilder.usuario = new Usuario();
 		usuarioBuilder.usuario.setNome("Usuario 1");
 		return usuarioBuilder;

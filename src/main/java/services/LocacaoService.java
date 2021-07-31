@@ -40,7 +40,7 @@ public class LocacaoService {
 			negativado = spcService.possuiNegativacao(usuario);
 		} catch (Exception e) {
 			throw new LocadoraException("Problemas com SPC, tente novamente");
-		}		
+		}
 		
 		if (negativado) {
 			throw new LocadoraException("Usuário Negativado");
@@ -80,6 +80,16 @@ public class LocacaoService {
 				emailService.notificarAtraso(locacao.getUsuario());
 			}
 		}
+	}
+	
+	public void prorrogarLocacao(Locacao locacao, int dias) {
+		Locacao novaLocacao = new Locacao();
+		novaLocacao.setUsuario(locacao.getUsuario());
+		novaLocacao.setFilmes(locacao.getFilmes());
+		novaLocacao.setDataLocacao(new Date());
+		novaLocacao.setDataRetorno(DataUtils.adicionarDias(new Date(), dias));
+		novaLocacao.setValor(locacao.getValor() * dias);
+		dao.salvar(novaLocacao);
 	}
 	
 	private Double calculaValorDescontadoFilme(int i, Double valorFilme) {
