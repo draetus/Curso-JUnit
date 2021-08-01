@@ -83,7 +83,7 @@ public class LocacaoService {
 	}
 	
 	public void prorrogarLocacao(Locacao locacao, int dias) {
-		Locacao novaLocacao = new Locacao();
+		var novaLocacao = new Locacao();
 		novaLocacao.setUsuario(locacao.getUsuario());
 		novaLocacao.setFilmes(locacao.getFilmes());
 		novaLocacao.setDataLocacao(new Date());

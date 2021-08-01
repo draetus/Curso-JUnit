@@ -4,6 +4,8 @@ import java.util.Calendar;
 
 public class MatchersProprios {
 	
+	private MatchersProprios() {}
+	
 	public static DiaSemanaMatcher caiEm(Integer diaSemana) {
 		return new DiaSemanaMatcher(diaSemana);
 	}

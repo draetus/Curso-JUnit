@@ -204,7 +204,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void deveProrrogarUmaLocacao() {
 		//cenario
-		Locacao locacao = umLocacao().agora();
+		var locacao = umLocacao().agora();
 		
 		//acao
 		service.prorrogarLocacao(locacao, 3);
@@ -212,7 +212,7 @@ public class LocacaoServiceTest {
 		//verificacao
 		ArgumentCaptor<Locacao> argCapt = ArgumentCaptor.forClass(Locacao.class);
 		Mockito.verify(dao).salvar(argCapt.capture());
-		Locacao locacaoRetornada = argCapt.getValue();
+		var locacaoRetornada = argCapt.getValue();
 		
 		error.checkThat(locacaoRetornada.getValor(), is(12.0));
 		error.checkThat(locacaoRetornada.getDataLocacao(), ehHoje());

@@ -20,7 +20,7 @@ public class DataDiferencaDiasMatcher extends TypeSafeMatcher<Date>{
 	@Override
 	public void describeTo(Description description) {
 		Date dataEsperada = DataUtils.obterDataComDiferencaDias(diferencaDias);
-		DateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		description.appendText(format.format(dataEsperada));
 	}
 
