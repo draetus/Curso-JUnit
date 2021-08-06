@@ -50,7 +50,7 @@ import model.Usuario;
 import utils.DataUtils;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(LocacaoService.class)
+@PrepareForTest({LocacaoService.class, DataUtils.class})
 public class LocacaoServiceTest {
 	
 	@InjectMocks
@@ -77,8 +77,9 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
-	public void deveAlugarFilme() throws FilmeSemEstoqueException, LocadoraException {
-		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+	public void deveAlugarFilme() throws Exception {
+		
+		PowerMockito.whenNew(Date.class).withNoArguments().thenReturn(DataUtils.obterData(28, 4, 2017));
 		
 		//cenario
 		Usuario usuario = umUsuario().agora();
@@ -90,6 +91,9 @@ public class LocacaoServiceTest {
 		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
 		error.checkThat(locacao.getDataLocacao(), ehHoje());
 		error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
+		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), DataUtils.obterData(28, 4, 2017)), is(true));
+		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterData(29, 4, 2017)), is(true));
+		
 	}
 	
 	@Test(expected = FilmeSemEstoqueException.class)
@@ -141,6 +145,7 @@ public class LocacaoServiceTest {
 		
 		//verificacao
 		assertThat(locacao.getDataRetorno(), caiNumaSegunda());
+		PowerMockito.verifyNew(Date.class, Mockito.times(2)).withNoArguments();;
 	}
 	
 	@Test
