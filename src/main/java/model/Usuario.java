@@ -6,8 +6,8 @@ public class Usuario {
 
 	@Override
 	public int hashCode() {
-		final var prime = 31;
-		var result = 1;
+		final int prime = 31;
+		int result = 1;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}

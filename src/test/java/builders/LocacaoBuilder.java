@@ -17,7 +17,7 @@ public class LocacaoBuilder {
 	private LocacaoBuilder(){}
 
 	public static LocacaoBuilder umLocacao() {
-		var builder = new LocacaoBuilder();
+		LocacaoBuilder builder = new LocacaoBuilder();
 		inicializarDadosPadroes(builder);
 		return builder;
 	}

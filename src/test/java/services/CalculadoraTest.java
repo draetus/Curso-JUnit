@@ -18,8 +18,8 @@ public class CalculadoraTest {
 	@Test
 	public void deveSomarDoisValores() {
 		//cenario
-		var a = 5;
-		var b = 3;
+		int a = 5;
+		int b = 3;
 		
 		//acao
 		int resultado = calc.somar(a, b);
@@ -31,8 +31,8 @@ public class CalculadoraTest {
 	@Test
 	public void deveSubtrairDoisValores() {
 		//cenario
-		var a = 8;
-		var b = 5;
+		int a = 8;
+		int b = 5;
 		
 		//acao
 		int resultado = calc.subtrair(a, b);
@@ -44,8 +44,8 @@ public class CalculadoraTest {
 	@Test
 	public void deveDividirDoisValores() throws NaoPodeDividirPorZeroException {
 		//cenario
-		var a = 6;
-		var b = 3;
+		int a = 6;
+		int b = 3;
 		
 		//acao
 		int resultado = calc.dividir(a, b);
@@ -57,8 +57,8 @@ public class CalculadoraTest {
 	@Test(expected = NaoPodeDividirPorZeroException.class)
 	public void deveLancarExcecaoAoDividirPorZero() throws NaoPodeDividirPorZeroException {
 		//cenario
-		var a = 10;
-		var b = 0;
+		int a = 10;
+		int b = 0;
 		
 		//acao
 		calc.dividir(a, b);
@@ -66,8 +66,8 @@ public class CalculadoraTest {
 	
 	@Test
 	public void deveDividirDoisValoresString() {
-		var a = "6";
-		var b = "3";
+		String a = "6";
+		String b = "3";
 		
 		int resultado = calc.divide(a, b);
 		

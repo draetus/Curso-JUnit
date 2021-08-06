@@ -21,7 +21,7 @@ public class DataUtils {
 	 * @return
 	 */
 	public static Date adicionarDias(Date data, int dias) {
-		var calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(data);
 		calendar.add(DAY_OF_MONTH, dias);
 		return calendar.getTime();
@@ -47,7 +47,7 @@ public class DataUtils {
 	 * @return
 	 */
 	public static Date obterData(int dia, int mes, int ano){
-		var calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		calendar.set(DAY_OF_MONTH, dia);
 		calendar.set(MONTH, mes - 1);
 		calendar.set(YEAR, ano);
@@ -63,9 +63,9 @@ public class DataUtils {
 	 * @return
 	 */
 	public static boolean isMesmaData(Date data1, Date data2) {
-		var calendar1 = Calendar.getInstance();
+		Calendar calendar1 = Calendar.getInstance();
 		calendar1.setTime(data1);
-		var calendar2 = Calendar.getInstance();
+		Calendar calendar2 = Calendar.getInstance();
 		calendar2.setTime(data2);
 		return (calendar1.get(DAY_OF_MONTH) == calendar2.get(DAY_OF_MONTH))
 				&& (calendar1.get(MONTH) == calendar2.get(MONTH))
@@ -80,7 +80,7 @@ public class DataUtils {
 	 * @return
 	 */
 	public static boolean verificarDiaSemana(Date data, int diaSemana) {
-		var calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(data);
 		return calendar.get(DAY_OF_WEEK) == diaSemana;
 	}

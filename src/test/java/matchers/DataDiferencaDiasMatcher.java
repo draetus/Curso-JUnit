@@ -18,15 +18,14 @@ public class DataDiferencaDiasMatcher extends TypeSafeMatcher<Date>{
 	}
 
 	@Override
+	protected boolean matchesSafely(Date data) {
+		return DataUtils.isMesmaData(data, DataUtils.obterDataComDiferencaDias(diferencaDias));
+	}
+
 	public void describeTo(Description description) {
 		Date dataEsperada = DataUtils.obterDataComDiferencaDias(diferencaDias);
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		description.appendText(format.format(dataEsperada));
-	}
-
-	@Override
-	protected boolean matchesSafely(Date data) {
-		return DataUtils.isMesmaData(data, DataUtils.obterDataComDiferencaDias(diferencaDias));
 	}
 
 }

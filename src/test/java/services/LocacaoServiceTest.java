@@ -10,7 +10,7 @@ import static matchers.MatchersProprios.ehHojeComDiferencaDias;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -30,12 +30,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import dao.LocacaoDAO;
 import exceptions.FilmeSemEstoqueException;
@@ -45,6 +49,8 @@ import model.Locacao;
 import model.Usuario;
 import utils.DataUtils;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(LocacaoService.class)
 public class LocacaoServiceTest {
 	
 	@InjectMocks
@@ -75,11 +81,11 @@ public class LocacaoServiceTest {
 		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 		
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilme().comValor(5.0).agora());
 		
 		//ação
-		var locacao = service.alugarFilme(usuario, filmes);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 		//verificação
 		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
 		error.checkThat(locacao.getDataLocacao(), ehHoje());
@@ -89,7 +95,7 @@ public class LocacaoServiceTest {
 	@Test(expected = FilmeSemEstoqueException.class)
 	public void naoDeveAlugarFilmeSemEstoque() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilmeSemEstoque().agora());
 		
 		//ação
@@ -113,7 +119,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void naoDeveAlugarFilmeSemFilme() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		exception.expect(LocadoraException.class);
 		exception.expectMessage("Filme vazio");
 		
@@ -123,15 +129,15 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
-	public void deveDevolverFilmeNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
-		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
-		
+	public void deveDevolverFilmeNaSegundaAoAlugarNoSabado() throws Exception {
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilme().agora());
 		
+		PowerMockito.whenNew(Date.class).withNoArguments().thenReturn(DataUtils.obterData(29, 4, 2017));
+		
 		//ação
-		var locacao = service.alugarFilme(usuario, filmes);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 		
 		//verificacao
 		assertThat(locacao.getDataRetorno(), caiNumaSegunda());
@@ -140,7 +146,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void naoDeveAlugarFilmeParaNegativadoSPC() throws Exception {
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilme().agora());
 		
 		when(spc.possuiNegativacao(any(Usuario.class))).thenReturn(true);
@@ -161,9 +167,9 @@ public class LocacaoServiceTest {
 	@Test
 	public void deveEnviarEmailParaLocacoesAtrasadas() {
 		//cenario
-		var usuario = umUsuario().agora();
-		var usuario2 = umUsuario().comNome("Usuario em dia").agora();
-		var usuario3 = umUsuario().comNome("Outro atrasado").agora();
+		Usuario usuario = umUsuario().agora();
+		Usuario usuario2 = umUsuario().comNome("Usuario em dia").agora();
+		Usuario usuario3 = umUsuario().comNome("Outro atrasado").agora();
 		List<Locacao> locacoes = Arrays.asList(
 				umLocacao().atrasada().comUsuario(usuario).agora(),
 				umLocacao().comUsuario(usuario2).agora(),
@@ -187,7 +193,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void deveTratarErronoSPC() throws Exception {
 		//cenario
-		var usuario = umUsuario().agora();
+		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilme().agora());
 		
 		when(spc.possuiNegativacao(Matchers.any(Usuario.class))).thenThrow(new Exception("Falha catastrofica"));
@@ -204,7 +210,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void deveProrrogarUmaLocacao() {
 		//cenario
-		var locacao = umLocacao().agora();
+		Locacao locacao = umLocacao().agora();
 		
 		//acao
 		service.prorrogarLocacao(locacao, 3);
@@ -212,7 +218,7 @@ public class LocacaoServiceTest {
 		//verificacao
 		ArgumentCaptor<Locacao> argCapt = ArgumentCaptor.forClass(Locacao.class);
 		Mockito.verify(dao).salvar(argCapt.capture());
-		var locacaoRetornada = argCapt.getValue();
+		Locacao locacaoRetornada = argCapt.getValue();
 		
 		error.checkThat(locacaoRetornada.getValor(), is(12.0));
 		error.checkThat(locacaoRetornada.getDataLocacao(), ehHoje());

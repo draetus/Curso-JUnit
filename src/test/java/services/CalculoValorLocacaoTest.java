@@ -21,6 +21,7 @@ import dao.LocacaoDAO;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import model.Filme;
+import model.Locacao;
 import model.Usuario;
 
 @RunWith(Parameterized.class)
@@ -72,10 +73,10 @@ public class CalculoValorLocacaoTest {
 	@Test
 	public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
-		var usuario = new Usuario("Usuario 1");
+		Usuario usuario = new Usuario("Usuario 1");
 		
 		//acao
-		var locacao = service.alugarFilme(usuario, filmes);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 		
 		//verificacao
 		Assert.assertEquals(valorLocacao, locacao.getValor(), 0.01);

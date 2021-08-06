@@ -48,20 +48,20 @@ public class LocacaoService {
 		
 		
 		
-		var locacao = new Locacao();
+		Locacao locacao = new Locacao();
 		locacao.setFilmes(filmes);
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
 		Double valorTotal = 0d;
-		for (var i=0; i<filmes.size(); i++) {
-			var filme = filmes.get(i);
+		for (int i=0; i<filmes.size(); i++) {
+			Filme filme = filmes.get(i);
 			Double valorFilme = calculaValorDescontadoFilme(i, filme.getPrecoLocacao());
 			valorTotal += valorFilme;
 		}
 		locacao.setValor(valorTotal);
 
 		//Entrega no dia seguinte
-		var dataEntrega = new Date();
+		Date dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
 		if(DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY))
 			dataEntrega = DataUtils.adicionarDias(dataEntrega, 1);
@@ -83,7 +83,7 @@ public class LocacaoService {
 	}
 	
 	public void prorrogarLocacao(Locacao locacao, int dias) {
-		var novaLocacao = new Locacao();
+		Locacao novaLocacao = new Locacao();
 		novaLocacao.setUsuario(locacao.getUsuario());
 		novaLocacao.setFilmes(locacao.getFilmes());
 		novaLocacao.setDataLocacao(new Date());
