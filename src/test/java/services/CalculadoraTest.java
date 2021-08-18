@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import exceptions.NaoPodeDividirPorZeroException;
 import runners.ParallelRunner;
 
-@RunWith(ParallelRunner.class)
 public class CalculadoraTest {
 	
 	private Calculadora calc;
