@@ -15,7 +15,8 @@
   			<includes>
   				<include>/**/*.java</include>
   			</includes>
-  			<threadCount>2</threadCount>
+<!--   			<threadCount>2</threadCount> -->
+  			<useUnlimitedThreads>true</useUnlimitedThreads>
   			<parallel>methods</parallel>
   		</configuration>
   	</plugin>
