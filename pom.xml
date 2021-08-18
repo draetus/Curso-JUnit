@@ -4,6 +4,22 @@
   <artifactId>TestesUnitarios</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
+  <build>
+  <testSourceDirectory>src</testSourceDirectory>
+  <plugins>
+  	<plugin>
+  		<groupId>org.apache.maven.plugins</groupId>
+  		<artifactId>maven-surefire-plugin</artifactId>
+  		<version>2.18.1</version>
+  		<configuration>
+  			<threadCount>2</threadCount>
+  			<parallel>methods</parallel>
+  		</configuration>
+  	</plugin>
+  </plugins>
+  
+  </build>
+  
   <dependencies>
   	<dependency>
   		<groupId>junit</groupId>
